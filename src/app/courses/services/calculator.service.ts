@@ -14,6 +14,7 @@ export class CalculatorService {
 
   add(n1: number, n2:number) {
     this.logger.log("Addition operation called");
+    // this.logger.log("2nd operation called");
     return n1 + n2;
   }
 
