@@ -1,62 +1,51 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CoursesCardListComponent} from './courses-card-list.component';
-import {CoursesModule} from '../courses.module';
-import {COURSES} from '../../../../server/db-data';
-import {DebugElement} from '@angular/core';
-import {By} from '@angular/platform-browser';
-import {sortCoursesBySeqNo} from '../home/sort-course-by-seq';
-import {Course} from '../model/course';
-import {setupCourses} from '../common/setup-test-data';
-
-
-
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoursesCardListComponent } from './courses-card-list.component';
+import { CoursesModule } from '../courses.module';
+import { COURSES } from '../../../../server/db-data';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { sortCoursesBySeqNo } from '../home/sort-course-by-seq';
+import { Course } from '../model/course';
+import { setupCourses } from '../common/setup-test-data';
 describe('CoursesCardListComponent', () => {
   let component: CoursesCardListComponent
-  let fixture : ComponentFixture<CoursesCardListComponent>
+  let fixture: ComponentFixture<CoursesCardListComponent>
   let el: DebugElement
-  beforeEach(async () =>{
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports : [CoursesModule]
+      imports: [CoursesModule]
     })
-    .compileComponents()
-    .then(() =>{
-      fixture = TestBed.createComponent(CoursesCardListComponent)
-      component = fixture.componentInstance
-      el = fixture.debugElement
-    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(CoursesCardListComponent)
+        component = fixture.componentInstance
+        el = fixture.debugElement
+      })
   })
-
   it("should create the component", () => {
-
-  //  pending();
-  expect(component).toBeTruthy()
+    //  pending();
+    expect(component).toBeTruthy()
     console.log(component);
-    
   });
-
-
   it("should display the course list", () => {
     component.courses = setupCourses()
     fixture.detectChanges()
     const cards = el.queryAll(By.css(".course-card"))
     console.log(el.nativeElement.outerHTML);
     console.log(cards);
-    
     expect(component.courses.length).toBe(12)
     // expect(component.courses.length > 0).toBeTruthy()
     // expect(component.courses.length > 0).toBeGreaterThan(0)
-
   });
-
-
   it("should display the first course", () => {
-
-      pending();
-
+    component.courses = setupCourses()
+    const course = component.courses[0]
+    fixture.detectChanges()
+    const card = el.query(By.css('.course-card')),
+      title: any = card.query(By.css('mat-card-title')),
+      image: any = card.query(By.css('img'))
+    expect(card).toBeTruthy('Could not find card');
+    expect(title.nativeElement.textContent).toBe(course.titles.description);
+    expect(image.nativeElement.src).toBe(course.iconUrl);
   });
-
-
 });
-
-
